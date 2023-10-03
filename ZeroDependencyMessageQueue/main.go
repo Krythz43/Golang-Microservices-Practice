@@ -6,13 +6,18 @@ import (
 )
 
 func main() {
-	job := worker.Job{
-		Action: PrintPayload,
-		Payload: map[string]string{
-			"time": time.Now().String(),
-		},
-	}
-
 	defer worker.Wait()
-	job.Fire()
+
+	for i := 0; i < 100; i++ {
+		job := worker.Job{
+			Action: PrintPayload,
+			Payload: map[string]string{
+				"time": time.Now().String(),
+			},
+		}
+
+		// This generic job here can be serialized and deserialized using gob package
+		// https://stackoverflow.com/questions/28020070/golang-serialize-and-deserialize-back/30721381#30721381
+		job.Fire()
+	}
 }

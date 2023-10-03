@@ -3,6 +3,7 @@ package worker
 import (
 	"fmt"
 	"sync"
+	"time"
 )
 
 var wg sync.WaitGroup
@@ -19,9 +20,9 @@ func Wait() {
 
 func (job Job) Fire() {
 	fmt.Println("In fire function")
-	wg.Add(2)
-	job.Action(job.Payload)
+	wg.Add(1)
 	go func() {
+		time.Sleep(time.Second * 1)
 		job.Action(job.Payload)
 		wg.Done()
 	}()
