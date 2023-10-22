@@ -25,6 +25,7 @@ func main() {
 	err := srv.ListenAndServe()
 
 	if err != nil {
+		fmt.Println("Error occured: " + err.Error())
 		log.Panic(err)
 	}
 }
